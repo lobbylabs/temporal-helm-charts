@@ -1,14 +1,14 @@
-name: Release Charts
+name: Release Helm Chart
 
 on:
   push:
+    paths-ignore:
+      - 'README.md'
     branches:
       - main
-    tags:
-      - "*"
 
 jobs:
-  helmRelease:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,22 +20,12 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
-          version: v3.8.1
-
-      - name: custom packaging
-        run: |
-          VERSION=${{github.ref_name}}
-          rm -rf .cr-release-packages
-          mkdir -p .cr-release-packages
-          helm package charts/youtube-stats-chart --app-version=${VERSION:1} --version=${VERSION:1} --destination=.cr-release-packages
+          version: v3.4.1
 
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action
-        with:
-          skip_packaging: true
+        uses: helm/chart-releaser-action@v1.2.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
