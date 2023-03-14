@@ -278,7 +278,7 @@ web:
     # loadBalancerIP:
 
   ingress:
-    enabled: false
+    enabled: true
     # className:
     annotations: {}
     # kubernetes.io/ingress.class: traefik
