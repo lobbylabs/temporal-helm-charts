@@ -28,7 +28,6 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.0
         with:
-          replacesArtifacts: false
           allowUpdates: "true"
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
